@@ -72,9 +72,24 @@ module mountingHoles(){
   }
 }
 
+module motorProtectionCap(){
+ dMotor = 24.7;
+ dOut = 26.5;
+ dStamp = 5;
+ height = 10;
+ difference(){
+   cylinder(d=dOut,height);
+   translate([0,0,2])cylinder(d=dMotor,height);
+ }
+ translate([0,0,2])cylinder(d=dStamp,2);
+}
+
+
+
 //test code here
-rotate([180,0])
+//motorProtectionCap();
+/*rotate([180,0])
 difference(){
     translate([-16,-17,-4])cube([80,34,7]);
 JGY_370motor();
-}
+}*/
