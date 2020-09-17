@@ -7,9 +7,9 @@ module JGY_370motor(mode = "model"){
   gearboxHeigth = 32;
   gearboxDepth = 22.5;
   motorDiameter = 24.5;
-  motorHeight = 31 + 5;
-  motorCablespace=10;
-  gearboxMotorOffsetY = 19;
+  motorHeight = 31;
+  motorCableSpace=10;
+  gearboxMotorOffsetY = 18;
   gearboxMotorOffsetZ = 9.4;
   gearboxTranssionOffsetY = gearboxHeigth / 2;
   gearboxTranssionOffsetX = 15;
@@ -18,7 +18,7 @@ module JGY_370motor(mode = "model"){
   translate([-gearboxTranssionOffsetX,-gearboxTranssionOffsetY,-22.5]){
     cube([gearboxWidth,gearboxHeigth,gearboxDepth]);
     translate([gearboxWidth,gearboxMotorOffsetY,gearboxMotorOffsetZ]){
-      rotate([0,90,0])cylinder(d=motorDiameter,h=motorHeight);
+      rotate([0,90,0])cylinder(d=motorDiameter,h=motorHeight+motorCableSpace);
     }
     
   }
@@ -32,7 +32,7 @@ module mountingHoles(){
   transmissionCenterX = 9;
   transmissionCenterY = 9;
   transmissionStudMountDiameter = 13.5;
-  transmissionStudDiameter = 6;
+  transmissionStudDiameter = 6 + 0.5; ;//+.5 for clearance
   transmissionWedgeCutoff = 1;
   transmissionWedgeStart = 2;
   transmissionRodHeight = 14;
@@ -73,23 +73,28 @@ module mountingHoles(){
 }
 
 module motorProtectionCap(){
- dMotor = 24.7;
+ dMotor = 24.5;
  dOut = 26.5;
  dStamp = 5;
  height = 10;
  difference(){
    cylinder(d=dOut,height);
-   translate([0,0,2])cylinder(d=dMotor,height);
+   translate([0,0,1])cylinder(d=dMotor,height);
  }
- translate([0,0,2])cylinder(d=dStamp,2);
+ translate([0,0,1])cylinder(d=dStamp,2);
 }
 
 
 
 //test code here
-//motorProtectionCap();
-/*rotate([180,0])
+motorProtectionCap();
+//rotate([180,0])
+/*linear_extrude(height=.5)
+projection(cut=true)
+translate([0,0,25/2])
 difference(){
-    translate([-16,-17,-4])cube([80,34,7]);
+    translate([-16,-17,-20])cube([90,34,20]);
 JGY_370motor();
 }*/
+
+
