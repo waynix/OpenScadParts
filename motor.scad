@@ -74,14 +74,16 @@ module mountingHoles(){
 
 module motorProtectionCap(){
  dMotor = 24.5;
+ dMotorBrim = 23;
  dOut = 26.5;
- dStamp = 5;
+ 
  height = 10;
  difference(){
    cylinder(d=dOut,height);
-   translate([0,0,1])cylinder(d=dMotor,height);
+   translate([0,0,1+3])cylinder(d=dMotor,height);
+   translate([0,0,1])cylinder(d=dMotorBrim,height);
  }
- translate([0,0,1])cylinder(d=dStamp,2);
+ 
 }
 
 
