@@ -88,15 +88,3 @@ module motorProtectionCap(){
 
 
 
-//test code here
-motorProtectionCap();
-//rotate([180,0])
-/*linear_extrude(height=.5)
-projection(cut=true)
-translate([0,0,25/2])
-difference(){
-    translate([-16,-17,-20])cube([90,34,20]);
-JGY_370motor();
-}*/
-
-
