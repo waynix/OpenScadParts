@@ -11,7 +11,7 @@
 
                         ┌┬┬┬┐                                        ──┬──    ┌┬┬┬┐    ──┬── axleheight
                       ┌─┴┴┴┴┴─┐                                        │     ┌┴┴┴┴┴┐   ──┼──
-                    ┌─┴───────┴───────────────────┐          ───┬───   │    ┌┴─────┴┐  ──┴── socketheigth
+                    ┌─┴───────┴───────────────────┐          ───┬───   │    ┌┴─────┴┐  ──┴── socketheight
                     │                             │             │      │ t  │       │
               ┌─────┘                             └─────┐       │      │ o  ├───────┤  ──┬──
               │                                         │       │      │ t  │       │    │   tabheight
@@ -52,8 +52,7 @@
 */
 
 // Array of known servos(see diagram above to derive your values) 
-servos = [
-  [ // Entry for TowerProMG996R
+function servoTowerProMG996R() = [
     "TowerProMG996R",  // name
     40.5,              // length
     20,                // width
@@ -71,8 +70,10 @@ servos = [
     4,                 // mountingholediameter
     4.5,               // powerportoffset
     [30,8,5]           // powerportdimensions (x choosen arbitrary)
-  ]
 ];
+
+function operativeHeight(dimensions = servoTowerProMG996R()) = dimensions[4] + dimensions[8];
+
 
 // Draw a servo
 // Note: Set only one of the values [cutout, holdblock, model] to true.
@@ -112,7 +113,7 @@ module servo(dimensions, cutout = false, holdblock=false,model=false, mountingsc
   ];
   
   // Move the axle to [0,0,0]
-  translate([0,0,-totalheight+axleheight]){
+  translate([0,0,-operativeHeight(dimensions)]){
     if(cutout)
     {
       translate([0,0,height+socketheight]) cylinder(d = 2*width,h = 2*axleheight);
@@ -137,21 +138,21 @@ module servo(dimensions, cutout = false, holdblock=false,model=false, mountingsc
 
     if(model) {
       color("blue") difference() {
-      // body
-      union() {
-        translate([-axlecenterX,-axlecenterY,0]) cube([length,width,height]);
-        // tab with holes
-        difference() {
-          translate([-axlecenterX -tab, -axlecenterY, taboffset]) cube([totallength,width,tabheight]);
-          for(i = mountingholeoffsets){
-            translate(i) cylinder(d=3, h=totalheight);
+        // body
+        union() {
+          translate([-axlecenterX,-axlecenterY,0]) cube([length,width,height]);
+          // tab with holes
+          difference() {
+            translate([-axlecenterX -tab, -axlecenterY, taboffset]) cube([totallength,width,tabheight]);
+            for(i = mountingholeoffsets){
+              translate(i) cylinder(d=3, h=totalheight);
+            }
           }
-        }
-        // socket
-        translate([0,0,height]) {
-            translate([0,0,0]) cylinder(d=socketdiameter, h=socketheight);
-        }
-      };
+          // socket
+          translate([0,0,height]) {
+              translate([0,0,0]) cylinder(d=socketdiameter, h=socketheight);
+          }
+        };
       }
       // axle
       color("white") translate([0,0,height+socketheight]) {
